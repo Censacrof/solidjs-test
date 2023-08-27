@@ -12,6 +12,7 @@ import {
   Title,
   useLocation,
 } from "solid-start";
+import { SessionProvider } from "./SessionContext";
 import "./root.css";
 
 export default function Root() {
@@ -29,11 +30,13 @@ export default function Root() {
       </Head>
       <Body class="bg-zinc-950">
         <Suspense>
-          <ErrorBoundary>
-            <Routes>
-              <FileRoutes />
-            </Routes>
-          </ErrorBoundary>
+          <SessionProvider>
+            <ErrorBoundary>
+              <Routes>
+                <FileRoutes />
+              </Routes>
+            </ErrorBoundary>
+          </SessionProvider>
         </Suspense>
         <Scripts />
       </Body>

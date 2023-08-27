@@ -1,6 +1,14 @@
+import { Navigate } from "solid-start";
+import { useSession } from "~/SessionContext";
 import { TodoList } from "~/components/TodoList";
 
 export default function Home() {
+  const { accessToken, setAccessToken } = useSession();
+
+  if (!accessToken()) {
+    return <Navigate href="./login" />;
+  }
+
   return (
     <main class="fixed inset-0 grid grid-cols-main grid-rows-main">
       <div class="row-start-2 col-start-2 flex flex-col bg-zinc-900 rounded-xl text-zinc-100 p-4 gap-4">

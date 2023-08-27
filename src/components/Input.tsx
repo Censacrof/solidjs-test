@@ -10,6 +10,6 @@ export const Input = (props: InputProps) => {
     <input
       {...props}
       class={twMerge("text-zinc-950 rounded-md h-8", props.class)}
-    ></input>
+    />
   );
 };

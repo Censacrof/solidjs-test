@@ -3,7 +3,7 @@ import { useSession } from "~/SessionContext";
 import { TodoList } from "~/components/TodoList";
 
 export default function Home() {
-  const { accessToken, setAccessToken } = useSession();
+  const { accessToken } = useSession();
 
   if (!accessToken()) {
     return <Navigate href="./login" />;

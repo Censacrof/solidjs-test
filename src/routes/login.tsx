@@ -1,8 +1,13 @@
 import { createSignal } from "solid-js";
+import { useNavigate } from "solid-start";
+import { useSession } from "~/SessionContext";
 import { Button } from "~/components/Button";
 import { Input } from "~/components/Input";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const { setAccessToken } = useSession();
+
   const [email, setEmail] = createSignal("");
   const [password, setPassword] = createSignal("");
 
@@ -32,7 +37,14 @@ export default function Login() {
             I forgot my password
           </a>
         </div>
-        <Button onClick={() => alert(email())}>Login</Button>
+        <Button
+          onClick={() => {
+            setAccessToken("a valid access token");
+            navigate("/");
+          }}
+        >
+          Login
+        </Button>
       </div>
     </div>
   );

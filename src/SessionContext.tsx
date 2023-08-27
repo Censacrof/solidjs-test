@@ -1,13 +1,15 @@
 import {
+  Accessor,
   JSXElement,
-  Signal,
+  Setter,
   createContext,
   createSignal,
   useContext,
 } from "solid-js";
 
-type SessionContextValue = {
-  accessTokenSignal: Signal<string | undefined>;
+export type SessionContextValue = {
+  accessToken: Accessor<string | undefined>;
+  setAccessToken: Setter<string | undefined>;
 };
 
 const SessionContext = createContext<SessionContextValue>();
@@ -15,12 +17,13 @@ const SessionContext = createContext<SessionContextValue>();
 export const SessionProvider = (props: {
   children?: JSXElement | JSXElement[];
 }) => {
-  const accessTokenSignal = createSignal<string>();
+  const [accessToken, setAccessToken] = createSignal<string>();
 
   return (
     <SessionContext.Provider
       value={{
-        accessTokenSignal,
+        accessToken,
+        setAccessToken,
       }}
     >
       {props.children}
@@ -28,4 +31,12 @@ export const SessionProvider = (props: {
   );
 };
 
-export const useSession = () => useContext(SessionContext);
+export const useSession = () => {
+  const context = useContext(SessionContext);
+
+  if (!context) {
+    throw new Error("useSession invoked outside of SessionProvider");
+  }
+
+  return context;
+};

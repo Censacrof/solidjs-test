@@ -9,6 +9,14 @@ module.exports = {
       gridTemplateRows: {
         main: "0.1fr 1fr 0.1fr",
       },
+
+      width: {
+        modal: "30rem",
+      },
+
+      height: {
+        modal: "20rem",
+      },
     },
   },
   plugins: [],

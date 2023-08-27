@@ -1,4 +1,5 @@
 import { Button } from "~/components/Button";
+import { Input } from "~/components/Input";
 
 export default function Login() {
   return (
@@ -7,11 +8,11 @@ export default function Login() {
         <div class="flex-grow flex flex-col bg-zinc-800 rounded-md p-2 justify-evenly">
           <label class="flex flex-col gap-1">
             <span class="text-zinc-50">e-mail</span>
-            <input type="email" placeholder="eg. foo@bar.com" />
+            <Input type="email" placeholder="eg. foo@bar.com" />
           </label>
           <label class="flex flex-col gap-1">
             <span class="text-zinc-50">password</span>
-            <input type="password" placeholder="enter your password" />
+            <Input type="password" placeholder="enter your password" />
           </label>
           <a href="#" class="text-blue-400">
             I forgot my password

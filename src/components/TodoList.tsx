@@ -1,5 +1,6 @@
 import { createSignal } from "solid-js";
 import { Button } from "./Button";
+import { Input } from "./Input";
 
 export const TodoList = () => {
   const [inputElement, setInputElement] = createSignal<HTMLDivElement>();
@@ -10,9 +11,8 @@ export const TodoList = () => {
   return (
     <div class="flex-grow flex flex-col gap-4">
       <div class="flex w-80 gap-2">
-        <input
+        <Input
           ref={setInputElement}
-          class="text-zinc-950 rounded-md"
           placeholder="buy milk"
           onInput={(event) => setnewItem(() => event.target.value)}
           value={newItem()}

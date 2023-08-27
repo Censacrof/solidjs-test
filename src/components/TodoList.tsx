@@ -1,4 +1,5 @@
 import { createSignal } from "solid-js";
+import { Button } from "./Button";
 
 export const TodoList = () => {
   const [inputElement, setInputElement] = createSignal<HTMLDivElement>();
@@ -16,30 +17,30 @@ export const TodoList = () => {
           onInput={(event) => setnewItem(() => event.target.value)}
           value={newItem()}
         />
-        <button
-          class="bg-zinc-700 px-4 py-1 rounded-md disabled:opacity-40"
+        <Button
           onClick={() => {
             setItems((items) => items.concat([newItem()]));
             setnewItem("");
             inputElement()?.focus();
           }}
           disabled={!newItem()}
+          colorScheme="gray"
         >
           Add
-        </button>
+        </Button>
       </div>
       <div class="flex-grow flex flex-col gap-4 bg-zinc-800 rounded-lg p-4">
         {items().map((item, i) => (
           <div class="flex items-center px-8 rounded-full h-10 self-stretch bg-zinc-900">
             <span class="flex-grow">{item}</span>
-            <button
-              class="bg-red-400 text-zinc-50 px-4 py-1 rounded-md disabled:opacity-40"
+            <Button
               onclick={() => {
                 setItems(items().filter((_item, index) => i !== index));
               }}
+              colorScheme="red"
             >
               delete
-            </button>
+            </Button>
           </div>
         ))}
       </div>

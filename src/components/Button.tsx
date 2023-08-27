@@ -11,8 +11,8 @@ export const Button = (props: ButtonProps) => {
     <button
       {...props}
       class={twMerge(
-        "bg-zinc-700 px-4 py-1 rounded-md disabled:opacity-40",
-        props.colorScheme === "red" && "bg-red-400 text-zinc-50",
+        "bg-zinc-700 px-4 py-1 rounded-md disabled:opacity-40 text-zinc-50",
+        props.colorScheme === "red" && "bg-red-400",
         props.class,
       )}
     ></button>

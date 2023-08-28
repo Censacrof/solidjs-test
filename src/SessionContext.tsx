@@ -5,6 +5,7 @@ const LOCAL_STORAGE_ACCESS_TOKEN_KEY = "accessToken";
 
 export type Session = {
   accessToken: string | undefined;
+  hasLoaded: boolean;
 };
 
 export type SessionContextValue = {
@@ -18,10 +19,9 @@ const SessionContext = createContext<SessionContextValue>();
 export const SessionProvider = (props: {
   children?: JSXElement | JSXElement[];
 }) => {
-  const [session, setSession] = createStore<{
-    accessToken: string | undefined;
-  }>({
+  const [session, setSession] = createStore<Session>({
     accessToken: undefined,
+    hasLoaded: false,
   });
 
   const setAccessToken = (accessToken: string) => {
@@ -40,6 +40,7 @@ export const SessionProvider = (props: {
     }
 
     setAccessToken(storedToken);
+    setSession({ ...session, hasLoaded: true });
   });
 
   const logout = () => {

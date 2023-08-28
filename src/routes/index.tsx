@@ -1,3 +1,4 @@
+import { Show } from "solid-js";
 import { useSession } from "~/SessionContext";
 import { Button } from "~/components/Button";
 import { NavigateToLogin } from "~/components/NavigateToLogin";
@@ -7,7 +8,7 @@ export default function Home() {
   const { session } = useSession();
 
   return (
-    <>
+    <Show when={session.hasLoaded}>
       {!session.accessToken && <NavigateToLogin />}
 
       <main class="fixed inset-0 grid grid-cols-main grid-rows-main">
@@ -22,7 +23,7 @@ export default function Home() {
           <TodoList />
         </div>
       </main>
-    </>
+    </Show>
   );
 }
 

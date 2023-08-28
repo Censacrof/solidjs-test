@@ -11,26 +11,31 @@ export default function Login() {
   const [username, setUsername] = createSignal("");
   const [password, setPassword] = createSignal("");
 
-  const [enrolling, login] = createRouteAction(
-    async ({ username, password }: { username: string; password: string }) => {
-      const result = await authenticate({ username, password });
+  const [enrolling, login] = createRouteAction(async (formData: FormData) => {
+    const username = formData.get("username") as string;
+    const password = formData.get("password") as string;
 
-      console.log({ result });
+    if (!username || !password) {
+      throw new Error("fill all the fields");
+    }
 
-      if (result.type === "error") {
-        throw new Error(result.error);
-      }
+    const result = await authenticate({ username, password });
 
-      setAccessToken(result.data);
-    },
-  );
+    console.log({ result });
+
+    if (result.type === "error") {
+      throw new Error(result.error);
+    }
+
+    setAccessToken(result.data);
+  });
 
   return (
     <>
       {accessToken() && <Navigate href={"/"} />}
 
       <div class="fixed inset-0 flex items-center justify-center">
-        <div class="flex flex-col w-modal h-modal bg-zinc-900 p-4 rounded-lg gap-4">
+        <login.Form class="flex flex-col w-modal h-modal bg-zinc-900 p-4 rounded-lg gap-4">
           <div class="flex-grow flex flex-col bg-zinc-800 rounded-md p-2 justify-evenly">
             <label class="flex flex-col gap-1">
               <span class="text-zinc-50">e-mail</span>
@@ -61,14 +66,8 @@ export default function Login() {
               </Show>
             </div>
           </div>
-          <Button
-            onClick={() =>
-              login({ username: username(), password: password() })
-            }
-          >
-            Login
-          </Button>
-        </div>
+          <Button type="submit">Login</Button>
+        </login.Form>
       </div>
     </>
   );

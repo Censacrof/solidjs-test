@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { Show, createSignal } from "solid-js";
 import { Navigate, createRouteAction } from "solid-start";
 import { useSession } from "~/SessionContext";
 import { authenticate } from "~/auth/authenticate";
@@ -8,17 +8,17 @@ import { Input } from "~/components/Input";
 export default function Login() {
   const { accessToken, setAccessToken } = useSession();
 
-  const [username, setUsername] = createSignal("francesco");
-  const [password, setPassword] = createSignal("foffo");
+  const [username, setUsername] = createSignal("");
+  const [password, setPassword] = createSignal("");
 
-  const [{ pending, error }, login] = createRouteAction(
+  const [enrolling, login] = createRouteAction(
     async ({ username, password }: { username: string; password: string }) => {
-      const result = await authenticate(username, password);
+      const result = await authenticate({ username, password });
 
       console.log({ result });
 
       if (result.type === "error") {
-        throw new Error(error);
+        throw new Error(result.error);
       }
 
       setAccessToken(result.data);
@@ -52,9 +52,14 @@ export default function Login() {
                 onChange={(event) => setPassword(() => event.target.value)}
               />
             </label>
-            <a href="#" class="text-blue-400">
-              I forgot my password
-            </a>
+            <div class="h-4 text-lg">
+              <Show when={enrolling.pending}>
+                <span class="text text-blue-400">please, wait...</span>
+              </Show>
+              <Show when={enrolling.error}>
+                <span class="text text-red-400">{enrolling.error.message}</span>
+              </Show>
+            </div>
           </div>
           <Button
             onClick={() =>
@@ -63,7 +68,6 @@ export default function Login() {
           >
             Login
           </Button>
-          {pending && <span>wait a second</span>}
         </div>
       </div>
     </>

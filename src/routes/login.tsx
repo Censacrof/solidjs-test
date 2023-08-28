@@ -6,7 +6,7 @@ import { Button } from "~/components/Button";
 import { Input } from "~/components/Input";
 
 export default function Login() {
-  const { accessToken, setAccessToken } = useSession();
+  const { session, setAccessToken } = useSession();
 
   const [username, setUsername] = createSignal("");
   const [password, setPassword] = createSignal("");
@@ -32,7 +32,7 @@ export default function Login() {
 
   return (
     <>
-      {accessToken() && <Navigate href={"/"} />}
+      {session.accessToken && <Navigate href={"/"} />}
 
       <div class="fixed inset-0 flex items-center justify-center">
         <login.Form class="flex flex-col w-modal h-modal bg-zinc-900 p-4 rounded-lg gap-4">

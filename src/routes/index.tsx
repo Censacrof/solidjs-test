@@ -4,11 +4,11 @@ import { NavigateToLogin } from "~/components/NavigateToLogin";
 import { TodoList } from "~/components/TodoList";
 
 export default function Home() {
-  const { accessToken } = useSession();
+  const { session } = useSession();
 
   return (
     <>
-      {!accessToken() && <NavigateToLogin />}
+      {!session.accessToken && <NavigateToLogin />}
 
       <main class="fixed inset-0 grid grid-cols-main grid-rows-main">
         <div class="row-start-1 col-start-3 justify-self-end p-4">
@@ -27,7 +27,7 @@ export default function Home() {
 }
 
 const LogoutButton = () => {
-  const { setAccessToken } = useSession();
+  const { logout } = useSession();
 
-  return <Button onClick={() => setAccessToken()}>Logout</Button>;
+  return <Button onClick={logout}>Logout</Button>;
 };

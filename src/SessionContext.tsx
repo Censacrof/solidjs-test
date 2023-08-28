@@ -1,15 +1,14 @@
-import {
-  Accessor,
-  JSXElement,
-  Setter,
-  createContext,
-  createSignal,
-  useContext,
-} from "solid-js";
+import { JSXElement, createContext, useContext } from "solid-js";
+import { createStore } from "solid-js/store";
+
+export type Session = {
+  accessToken: string | undefined;
+};
 
 export type SessionContextValue = {
-  accessToken: Accessor<string | undefined>;
-  setAccessToken: Setter<string | undefined>;
+  session: Session;
+  setAccessToken: (token: string) => void;
+  logout: () => void;
 };
 
 const SessionContext = createContext<SessionContextValue>();
@@ -17,13 +16,32 @@ const SessionContext = createContext<SessionContextValue>();
 export const SessionProvider = (props: {
   children?: JSXElement | JSXElement[];
 }) => {
-  const [accessToken, setAccessToken] = createSignal<string>();
+  const [session, setSession] = createStore<{
+    accessToken: string | undefined;
+  }>({
+    accessToken: undefined,
+  });
+
+  const setAccessToken = (accessToken: string) => {
+    setSession({
+      ...session,
+      accessToken,
+    });
+  };
+
+  const logout = () => {
+    setSession({
+      ...session,
+      accessToken: undefined,
+    });
+  };
 
   return (
     <SessionContext.Provider
       value={{
-        accessToken,
+        session,
         setAccessToken,
+        logout,
       }}
     >
       {props.children}

@@ -10,10 +10,13 @@ const alg = "HS256";
 
 // my totally (un)safe authenticator function :-)
 export const authenticate = server$(
-  async (
-    username: string,
-    password: string,
-  ): Promise<Result<string, string>> => {
+  async ({
+    username,
+    password,
+  }: {
+    username: string;
+    password: string;
+  }): Promise<Result<string, string>> => {
     await new Promise((resolve, _) => setTimeout(resolve, 1000));
 
     if (username !== "francesco" || password !== "foffo") {

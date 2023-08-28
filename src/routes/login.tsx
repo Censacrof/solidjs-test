@@ -1,14 +1,29 @@
 import { createSignal } from "solid-js";
-import { Navigate } from "solid-start";
+import { Navigate, createRouteAction } from "solid-start";
 import { useSession } from "~/SessionContext";
+import { authenticate } from "~/auth/authenticate";
 import { Button } from "~/components/Button";
 import { Input } from "~/components/Input";
 
 export default function Login() {
   const { accessToken, setAccessToken } = useSession();
 
-  const [email, setEmail] = createSignal("");
-  const [password, setPassword] = createSignal("");
+  const [username, setUsername] = createSignal("francesco");
+  const [password, setPassword] = createSignal("foffo");
+
+  const [{ pending, error }, login] = createRouteAction(
+    async ({ username, password }: { username: string; password: string }) => {
+      const result = await authenticate(username, password);
+
+      console.log({ result });
+
+      if (result.type === "error") {
+        throw new Error(error);
+      }
+
+      setAccessToken(result.data);
+    },
+  );
 
   return (
     <>
@@ -20,10 +35,11 @@ export default function Login() {
             <label class="flex flex-col gap-1">
               <span class="text-zinc-50">e-mail</span>
               <Input
-                type="email"
-                placeholder="eg. foo@bar.com"
-                value={email()}
-                onChange={(event) => setEmail(() => event.target.value)}
+                type="text"
+                placeholder="eg. johndoe"
+                name="username"
+                value={username()}
+                onChange={(event) => setUsername(() => event.target.value)}
               />
             </label>
             <label class="flex flex-col gap-1">
@@ -31,6 +47,7 @@ export default function Login() {
               <Input
                 type="password"
                 placeholder="enter your password"
+                name="password"
                 value={password()}
                 onChange={(event) => setPassword(() => event.target.value)}
               />
@@ -39,9 +56,14 @@ export default function Login() {
               I forgot my password
             </a>
           </div>
-          <Button onClick={() => setAccessToken("a valid access token")}>
+          <Button
+            onClick={() =>
+              login({ username: username(), password: password() })
+            }
+          >
             Login
           </Button>
+          {pending && <span>wait a second</span>}
         </div>
       </div>
     </>

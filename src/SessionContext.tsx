@@ -1,4 +1,4 @@
-import { JSXElement, createContext, createEffect, useContext } from "solid-js";
+import { JSXElement, createContext, onMount, useContext } from "solid-js";
 import { createStore } from "solid-js/store";
 
 const LOCAL_STORAGE_ACCESS_TOKEN_KEY = "accessToken";
@@ -33,7 +33,7 @@ export const SessionProvider = (props: {
     localStorage.setItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY, accessToken);
   };
 
-  createEffect(() => {
+  onMount(() => {
     const storedToken = localStorage.getItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY);
     if (!storedToken) {
       return;

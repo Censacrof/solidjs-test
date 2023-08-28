@@ -1,5 +1,7 @@
-import { JSXElement, createContext, useContext } from "solid-js";
+import { JSXElement, createContext, createEffect, useContext } from "solid-js";
 import { createStore } from "solid-js/store";
+
+const LOCAL_STORAGE_ACCESS_TOKEN_KEY = "accessToken";
 
 export type Session = {
   accessToken: string | undefined;
@@ -27,13 +29,26 @@ export const SessionProvider = (props: {
       ...session,
       accessToken,
     });
+
+    localStorage.setItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY, accessToken);
   };
+
+  createEffect(() => {
+    const storedToken = localStorage.getItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY);
+    if (!storedToken) {
+      return;
+    }
+
+    setAccessToken(storedToken);
+  });
 
   const logout = () => {
     setSession({
       ...session,
       accessToken: undefined,
     });
+
+    localStorage.removeItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY);
   };
 
   return (

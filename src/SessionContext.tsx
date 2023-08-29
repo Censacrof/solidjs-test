@@ -35,11 +35,10 @@ export const SessionProvider = (props: {
 
   onMount(() => {
     const storedToken = localStorage.getItem(LOCAL_STORAGE_ACCESS_TOKEN_KEY);
-    if (!storedToken) {
-      return;
+    if (storedToken) {
+      setAccessToken(storedToken);
     }
 
-    setAccessToken(storedToken);
     setSession({ ...session, hasLoaded: true });
   });
 

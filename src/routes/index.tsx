@@ -9,7 +9,9 @@ export default function Home() {
 
   return (
     <Show when={session.hasLoaded}>
-      {!session.accessToken && <NavigateToLogin />}
+      <Show when={!session.accessToken}>
+        <NavigateToLogin />
+      </Show>
 
       <main class="fixed inset-0 grid grid-cols-main grid-rows-main">
         <div class="row-start-1 col-start-3 justify-self-end p-4">

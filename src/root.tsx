@@ -12,7 +12,7 @@ import {
   Title,
   useLocation,
 } from "solid-start";
-import { SessionProvider } from "./SessionContext";
+import { SessionProvider } from "./context/SessionContext";
 import "./root.css";
 
 export default function Root() {

@@ -1,8 +1,8 @@
 import { Show } from "solid-js";
-import { useSession } from "~/SessionContext";
 import { Button } from "~/components/Button";
 import { NavigateToLogin } from "~/components/NavigateToLogin";
 import { TodoList } from "~/components/TodoList";
+import { useSession } from "~/context/SessionContext";
 
 export default function Home() {
   const { session } = useSession();

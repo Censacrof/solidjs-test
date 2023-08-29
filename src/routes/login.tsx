@@ -1,9 +1,9 @@
 import { Show, createSignal } from "solid-js";
 import { Navigate, createRouteAction } from "solid-start";
-import { useSession } from "~/SessionContext";
 import { authenticate } from "~/auth/authenticate";
 import { Button } from "~/components/Button";
 import { Input } from "~/components/Input";
+import { useSession } from "~/context/SessionContext";
 
 export default function Login() {
   const { session, setAccessToken } = useSession();

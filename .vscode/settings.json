@@ -1,7 +1,7 @@
 {
-    "emmet.includeLanguages": {
-        "javascriptreact": "html",
-        "typescriptreact": "html"
-    },
-    "prettier.prettierPath": ""
+  "emmet.includeLanguages": {
+    "javascriptreact": "html",
+    "typescriptreact": "html"
+  },
+  "prettier.prettierPath": ""
 }
